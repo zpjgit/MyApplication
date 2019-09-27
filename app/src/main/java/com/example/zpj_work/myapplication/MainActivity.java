@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private UsbDeviceConnection myDeviceConnection;
     private UsbEndpoint epOut;
     private UsbEndpoint epIn;
-//    byte[] mybuffer;
+    byte[] mybuffer;
 
 
     @Override
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 //        5A 55 06 00 0D 06 00 C8 6A 69
-//        mybuffer = new byte[]{(byte)0x5A, (byte)0x55, (byte)0x06, (byte)0x00, (byte)0x0D, (byte)0x06, (byte)0x00, (byte)0xC8, (byte)0x6A, (byte)0x69};
+        mybuffer = new byte[]{(byte)0x5A, (byte)0x55, (byte)0x06, (byte)0x00, (byte)0x0D, (byte)0x06, (byte)0x00, (byte)0xC8, (byte)0x6A, (byte)0x69};
 
 //        cmd = "5A5506000D0700C96A69";
 //        cmd01 = "5A5508000D11000000D56A69";
@@ -188,12 +189,24 @@ public class MainActivity extends AppCompatActivity {
 
     //拿到端点，用bulkTransfer进行数据发收
     private void assignEndpoint() {
-        if (myInterface.getEndpoint(1) != null) {
-            epOut = myInterface.getEndpoint(1);
+        for (int i=0; i<myInterface.getEndpointCount(); i++ ) {
+            UsbEndpoint ep = myInterface.getEndpoint(i);
+            if (ep.getType() == UsbConstants.USB_ENDPOINT_XFER_BULK) {
+                if (ep.getDirection() == UsbConstants.USB_DIR_OUT) {
+                    epOut = ep;
+                } else {
+                    epIn = ep;
+                }
+            }
         }
-        if (myInterface.getEndpoint(0) != null) {
-            epIn = myInterface.getEndpoint(0);
-        }
+
+//        if (myInterface.getEndpoint(1) != null) {
+//            epOut = myInterface.getEndpoint(1);
+//        }
+//        if (myInterface.getEndpoint(0) != null) {
+//            epIn = myInterface.getEndpoint(0);
+//        }
+
         info.setText(myUsbDevice.getDeviceName() + "\nInterfaceCount: " + myUsbDevice.getInterfaceCount() + "\nEndpointCount: " + myInterface.getEndpointCount());
         Log.d(TAG, "assignEndpoint: \n"+myUsbDevice.getDeviceName() + "\nInterfaceCount: " + myUsbDevice.getInterfaceCount() + "\nEndpointCount: " + myInterface.getEndpointCount());
         Log.d(TAG, "assignEndpoint");
@@ -201,11 +214,8 @@ public class MainActivity extends AppCompatActivity {
         String cmd = "5A5506000D0700C96A69";
         String cmd01 = "5A5508000D11000000D56A69";
         byte[] buf = HexToByteArr(cmd01);
-//        int re = myDeviceConnection.bulkTransfer(epOut, buf, buf.length, 3000);
-        int re = send_Message(buf);
-//        int re = myDeviceConnection.bulkTransfer(epOut, mybuffer, mybuffer.length, 3000);
+        int re = send_Message(buf);//mybuffer
         byte[] reByte = new byte[64];
-//        int re2 = myDeviceConnection.bulkTransfer(epIn, reByte, reByte.length, 3000);
         int re2 = receive_Message(reByte);
 //        for (Byte byte1:reByte) {
 //            System.err.println(byte1);
@@ -226,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
         //-----------------------------------------
 
-        Log.i(TAG, "re"+re2+"\n"+bytesToHexString(reByte));
+        Log.i(TAG, "re: "+re+", re2: "+re2+"\n"+bytesToHexString(reByte));
         Toast.makeText(this, bytesToHexString(reByte), Toast.LENGTH_LONG).show();
         info.setText(myUsbDevice.getDeviceName() + "\nInterfaceCount: " + myUsbDevice.getInterfaceCount() + "\nEndpointCount: " + myInterface.getEndpointCount()
                 +"\nepOut: "+cmd01
@@ -240,9 +250,9 @@ public class MainActivity extends AppCompatActivity {
         int ret = -1;
         if(epOut != null){
             ret = myDeviceConnection.bulkTransfer(epOut, sendBytes, sendBytes.length, TIMEOUT);
-            Log.d(TAG,"write ok");
+            Log.d(TAG,"send ok");
         }else {
-            Log.d(TAG,"write failed");
+            Log.d(TAG,"send failed");
         }
 
         return ret;
@@ -256,10 +266,10 @@ public class MainActivity extends AppCompatActivity {
         if(epIn != null){
             ret = myDeviceConnection.bulkTransfer(epIn, receiveBytes, receiveBytes.length, TIMEOUT);
 //            ret = Byte2Hex(myDeviceConnection.bulkTransfer(epIn, receiveBytes, receiveBytes.length, TIMEOUT));
-            Log.d(TAG, "read ok");
+            Log.d(TAG, "receive ok");
 
         }else {
-            Log.d(TAG, "read failed");
+            Log.d(TAG, "receive failed");
         }
 
         return ret;
@@ -270,6 +280,7 @@ public class MainActivity extends AppCompatActivity {
         return String.format("%02x", inByte).toUpperCase();
     }
 
+    /*byte数组拼接为String*/
     public String bytesToHexString(byte[] src) {
         StringBuilder stringBuilder = new StringBuilder();
         if (src == null || src.length <= 0) {
