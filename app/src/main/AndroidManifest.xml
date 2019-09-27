@@ -3,6 +3,7 @@
     package="com.example.zpj_work.myapplication">
     <uses-feature android:name="android.hardware.usb.host"/>
     <uses-permission android:name="android.hardware.usb.host" />
+    <uses-permission android:name="android.hardware.usb.accessory" />
 
     <application
         android:allowBackup="true"
