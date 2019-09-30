@@ -4,6 +4,8 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.util.Log;
 
+import java.util.Arrays;
+
 /**
  * @创建者 zhengpengjie
  * @创建日期 2019/9/30 0030 15:27
@@ -15,11 +17,10 @@ public class ReceiveMessage {
 
     byte[] mybuffer, receiveData;
     String [] receiveDatas = new String[10];
-
+    static String [] data = null;
 
     /*接收数据*/
     public  int receive_Message(byte[] receiveBytes, UsbEndpoint epIn, UsbDeviceConnection myDeviceConnection, int TIMEOUT){
-        //        String [] receiveDatas = null;
         int ret = 1;
         if(epIn != null){
             for (int i = 0; i < 10; i++) {
@@ -60,8 +61,9 @@ public class ReceiveMessage {
             //                }
             //            }
 
-            DevComm.sleep(3000);
-
+            DevComm.sleep(300);
+            data = receiveDatas;
+            Log.d(TAG, "DataRe: "+Arrays.toString(receiveDatas));
 
             //            Log.d(TAG, "receiveDatas: \n"+receiveDatas[1]+"\n"+receiveDatas[2]+"\n"+receiveDatas[3]);
             //            info.setText("\n"+receiveDatas[1]+"\n"+receiveDatas[2]+"\n"+receiveDatas[3]);
@@ -71,4 +73,12 @@ public class ReceiveMessage {
 
         return ret;
     }
+
+    public String [] getData() {
+        Log.d(TAG, "Data: "+Arrays.toString(data));
+
+        return data;
+    }
+
+
 }

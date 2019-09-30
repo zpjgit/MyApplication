@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.example.zpj_work.myapplication.listviewtest.Fruit;
 import com.example.zpj_work.myapplication.listviewtest.FruitAdapter;
 import com.example.zpj_work.myapplication.usb.EnumerateDevice;
+import com.example.zpj_work.myapplication.usb.ReceiveMessage;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -83,6 +84,10 @@ public class MainActivity extends AppCompatActivity {
                 EnumerateDevice en = new EnumerateDevice();
                 en.enumerateDevice(1, myUsbManager, pi);
 
+                initFruitsData();//初始化数据
+                FruitAdapter adapter=new FruitAdapter(MainActivity.this,R.layout.fruit_item,fruitList);
+                ListView listView=(ListView)findViewById(R.id.list_view);
+                listView.setAdapter(adapter);
             }
         });
 
@@ -98,17 +103,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        initFruits(receiveDatas);//初始化数据
+//        initFruits();//初始化数据
 //        FruitAdapter adapter=new FruitAdapter(MainActivity.this,R.layout.fruit_item,fruitList);
 //        ListView listView=(ListView)findViewById(R.id.list_view);
 //        listView.setAdapter(adapter);
+
+
     }
 
     //初始化滚动数据
-    private void initFruits(String[] receiveDatas) {
-        for (int i = 1; i < 100; i++) {
+//    private void initFruits() { //
+//        ReceiveMessage re = new ReceiveMessage();
+//        String[] receiveDatas = re.getData();
+//        for (int i = 1; i < 10; i++) {
 //            Fruit data = new Fruit(i, "5A 55 08 00 0D 11 00 00 01 D6 6A 69");
-            Fruit data = new Fruit(i, receiveDatas[i]);
+////            Fruit data = new Fruit(i, receiveDatas[i].toUpperCase());
+//
+//            fruitList.add(data);
+//        }
+//    }
+
+    private void initFruitsData() { //
+        ReceiveMessage re = new ReceiveMessage();
+        String[] receiveDatas = re.getData();
+        for (int i = 1; i < 10; i++) {
+            //            Fruit data = new Fruit(i, "5A 55 08 00 0D 11 00 00 01 D6 6A 69");
+            Fruit data = new Fruit(i, receiveDatas[i].toUpperCase());
 
             fruitList.add(data);
         }
