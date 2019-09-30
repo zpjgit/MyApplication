@@ -28,14 +28,38 @@
     <TextView
         android:id="@+id/info"
         android:layout_width="match_parent"
-        android:layout_height="203dp"
+        android:layout_height="92dp"
         android:text="TextView" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="311dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        tools:ignore="MissingConstraints">
+
+
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="284dp"
+
+            />
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="测试" />
+
+    <Button
+        android:id="@+id/buttonST"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="停止" />
 
 
 
