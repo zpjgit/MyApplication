@@ -15,25 +15,35 @@ public class ReceiveMessage {
 
     private static final String TAG                   = "hik";
 
-    byte[] mybuffer, receiveData;
-    String [] receiveDatas = new String[10];
+//    byte[] mybuffer, receiveData;
+    String [] receiveDatas = new String[1024];
     static String [] data = null;
 
     /*接收数据*/
     public  int receive_Message(byte[] receiveBytes, UsbEndpoint epIn, UsbDeviceConnection myDeviceConnection, int TIMEOUT){
         int ret = 1;
         if(epIn != null){
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 1024; i++) {
                 ret = myDeviceConnection.bulkTransfer(epIn, receiveBytes, receiveBytes.length, TIMEOUT);
-                //            ret = Byte2Hex(myDeviceConnection.bulkTransfer(epIn, receiveBytes, receiveBytes.length, TIMEOUT));
-                //                Log.d(TAG, "receive ok"+ret);
-                receiveData = new byte[ret];
+//                if (receiveBytes.length != ret || ret == 0 || DevComm.bytesToHexString(receiveBytes) == null) {
+                if (ret <= 0 || DevComm.bytesToHexString(receiveBytes) == null) {
+
+                    Log.d(TAG, "\n读到的数据为空或者出错 " + ret + ", " + receiveBytes.length);
+
+                    break;
+                }
+
+                byte[] receiveData = new byte[ret];
                 for (int j = 0; j < ret; j++) {
                     receiveData[j] = receiveBytes[j];
                 }
 
                 receiveDatas[i] = DevComm.bytesToHexString(receiveData);
                 Log.d(TAG, "\nreceiveDatas " + ret + ": " + receiveDatas[i]);
+
+
+                DevComm.sleep(300);
+
             }
 //            info.setText(
 //                    receiveDatas[0] + "\n"
@@ -48,25 +58,11 @@ public class ReceiveMessage {
 //                            + receiveDatas[9]
 //            );
 
-            //            initFruits(receiveDatas);//初始化数据
-            //            FruitAdapter adapter=new FruitAdapter(MainActivity.this,R.layout.fruit_item,fruitList);
-            //            ListView listView=(ListView)findViewById(R.id.list_view);
-            //            listView.setAdapter(adapter);
 
-            //            //初始化滚动数据
-            //            private void initFruits() {
-            //                for (int i = 1; i < 100; i++) {
-            //                    Fruit data = new Fruit(i, "5A 55 08 00 0D 11 00 00 01 D6 6A 69");
-            //                    fruitList.add(data);
-            //                }
-            //            }
-
-            DevComm.sleep(300);
+//            DevComm.sleep(300);
             data = receiveDatas;
             Log.d(TAG, "DataRe: "+Arrays.toString(receiveDatas));
 
-            //            Log.d(TAG, "receiveDatas: \n"+receiveDatas[1]+"\n"+receiveDatas[2]+"\n"+receiveDatas[3]);
-            //            info.setText("\n"+receiveDatas[1]+"\n"+receiveDatas[2]+"\n"+receiveDatas[3]);
         } else {
             Log.d(TAG, "receive failed");
         }

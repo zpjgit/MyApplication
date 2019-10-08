@@ -126,8 +126,11 @@ public class MainActivity extends AppCompatActivity {
     private void initFruitsData() { //
         ReceiveMessage re = new ReceiveMessage();
         String[] receiveDatas = re.getData();
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i <= 1024; i++) {
             //            Fruit data = new Fruit(i, "5A 55 08 00 0D 11 00 00 01 D6 6A 69");
+            if (receiveDatas[i] == null) {
+                break;
+            }
             Fruit data = new Fruit(i, receiveDatas[i].toUpperCase());
 
             fruitList.add(data);
