@@ -149,20 +149,30 @@ public class EnumerateDevice {
 
         byte[] buf = null;
         String cmd = "5A5506000D0700C96A69";
-        String cmd01 = "5A5508000D11000000D56A69";
-        String cmd02 = "5A5508000D11000001D66A69"; //5A 55 08 00 0D 11 00 00 01 D6 6A 69
+        String cmd01 = "5A5508000D11000000D56A69"; //非连续盘点不启用FastID功能
+        String cmd02 = "5A5508000D11000001D66A69"; //连续盘点不启用FastID功能    5A 55 08 00 0D 11 00 00 01 D6 6A 69
         String abortc = "5A5506000D0300C56A69"; //停止
         if (m == 0) {
             buf = DevComm.HexToByteArr(abortc);
             SendMessage send = new SendMessage();
             int re = send.send_Message(buf, epOut, myDeviceConnection, TIMEOUT);
-            myDeviceConnection.releaseInterface(myInterface);
+//            myDeviceConnection.releaseInterface(myInterface);
 
             //            myDeviceConnection.close();
 
         }
         if (m == 1) {
             buf = DevComm.HexToByteArr(cmd01);
+            SendMessage send = new SendMessage();
+            int re = send.send_Message(buf, epOut, myDeviceConnection, TIMEOUT);
+            myDeviceConnection.releaseInterface(myInterface);
+
+            //            myDeviceConnection.close();//关闭usb口
+
+        }
+
+        if (m == 2) {
+            buf = DevComm.HexToByteArr(cmd02);
             SendMessage send = new SendMessage();
             int re = send.send_Message(buf, epOut, myDeviceConnection, TIMEOUT);
             myDeviceConnection.releaseInterface(myInterface);

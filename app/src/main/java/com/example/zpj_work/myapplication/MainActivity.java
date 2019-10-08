@@ -92,6 +92,18 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        final Button clear_re = (Button) findViewById(R.id.clear_re);
+        clear_re.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+
+                FruitAdapter adapter=new FruitAdapter(MainActivity.this,R.layout.fruit_item,fruitList);
+                ListView listView=(ListView)findViewById(R.id.list_view);
+                listView.setAdapter(adapter);
+                clear(listView);
+            }
+        });
+
         //添加一个按钮用来停止设备
         final Button buttonST = (Button) findViewById(R.id.buttonST);
         buttonST.setOnClickListener(new View.OnClickListener() {
@@ -123,18 +135,22 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
-    private void initFruitsData() { //
+    private void initFruitsData() { //ok
         ReceiveMessage re = new ReceiveMessage();
         String[] receiveDatas = re.getData();
         for (int i = 1; i <= 1024; i++) {
             //            Fruit data = new Fruit(i, "5A 55 08 00 0D 11 00 00 01 D6 6A 69");
+            Fruit data = new Fruit(i, receiveDatas[i-1].toUpperCase());
+
+            fruitList.add(data);
             if (receiveDatas[i] == null) {
                 break;
             }
-            Fruit data = new Fruit(i, receiveDatas[i].toUpperCase());
-
-            fruitList.add(data);
         }
+    }
+
+    public void clear(View view) {
+        fruitList.removeAll(fruitList);
     }
 
     @Override

@@ -25,6 +25,34 @@
         <!--android:layout_height="wrap_content"-->
         <!--android:text="Button" />-->
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="盘点" />
+
+        <Button
+            android:id="@+id/clear_re"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="清除" />
+
+        <Button
+            android:id="@+id/buttonST"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+
+            android:text="停止" />
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/info"
         android:layout_width="match_parent"
@@ -33,7 +61,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="311dp"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
@@ -43,23 +71,13 @@
         <ListView
             android:id="@+id/list_view"
             android:layout_width="match_parent"
-            android:layout_height="284dp"
+            android:layout_height="match_parent"
 
             />
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="测试" />
 
-    <Button
-        android:id="@+id/buttonST"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:text="停止" />
 
 
 

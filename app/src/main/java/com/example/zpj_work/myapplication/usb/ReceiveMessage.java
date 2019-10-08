@@ -4,7 +4,11 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.util.Log;
 
+import com.example.zpj_work.myapplication.listviewtest.Fruit;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @创建者 zhengpengjie
@@ -13,7 +17,8 @@ import java.util.Arrays;
  */
 public class ReceiveMessage {
 
-    private static final String TAG                   = "hik";
+    private static final String      TAG       = "hik";
+    private              List<Fruit> fruitList =new ArrayList<>();
 
 //    byte[] mybuffer, receiveData;
     String [] receiveDatas = new String[1024];
@@ -41,8 +46,10 @@ public class ReceiveMessage {
                 receiveDatas[i] = DevComm.bytesToHexString(receiveData);
                 Log.d(TAG, "\nreceiveDatas " + ret + ": " + receiveDatas[i]);
 
+//                Fruit data = new Fruit(i+1, receiveDatas[i].toUpperCase());
+//                fruitList.add(data);
 
-                DevComm.sleep(300);
+//                DevComm.sleep(10);
 
             }
 //            info.setText(
