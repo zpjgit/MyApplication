@@ -38,7 +38,7 @@ public class Analysis {
     }
 
 
-    public String[][] getData_Str() {
+    public String[][] getData_str() {
         return data_str;
     }
 

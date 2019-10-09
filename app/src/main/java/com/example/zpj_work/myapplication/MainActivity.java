@@ -28,13 +28,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.zpj_work.myapplication.analysis.Analysis;
 import com.example.zpj_work.myapplication.listviewtest.Fruit;
 import com.example.zpj_work.myapplication.listviewtest.FruitAdapter;
+import com.example.zpj_work.myapplication.usb.DevComm;
 import com.example.zpj_work.myapplication.usb.EnumerateDevice;
 import com.example.zpj_work.myapplication.usb.ReceiveMessage;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -101,6 +104,24 @@ public class MainActivity extends AppCompatActivity {
                 ListView listView=(ListView)findViewById(R.id.list_view);
                 listView.setAdapter(adapter);
                 clear(listView);
+            }
+        });
+
+        //测试
+        final Button test_q = (Button) findViewById(R.id.text_q);
+        test_q.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+                Analysis analysis = new Analysis();
+                String[][] text_q = analysis.getData_str();
+
+                for (int i=0; i<text_q.length; i++) {
+                    if (text_q[i][0] == null) {
+                        continue;
+                    }
+                    text_q[i] = DevComm.removeArrayEmptyTextBackNewArray(text_q[i]);//data_str[i][]
+                    Log.d(TAG, "\n=============text_q============== " + ": ==>" + Arrays.toString(text_q[i]));
+                }
             }
         });
 
