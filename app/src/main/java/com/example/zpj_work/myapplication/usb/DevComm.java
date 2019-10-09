@@ -1,5 +1,9 @@
 package com.example.zpj_work.myapplication.usb;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @创建者 zhengpengjie
  * @创建日期 2019/9/30 0030 15:23
@@ -67,4 +71,21 @@ public class DevComm {
             e.printStackTrace();
         }
     }
+
+
+    //去除一维数组的空项
+    public static String[] removeArrayEmptyTextBackNewArray(String[] strArray) {
+        List<String> strList= Arrays.asList(strArray);
+        List<String> strListNew=new ArrayList<>();
+        for (int i = 0; i <strList.size(); i++) {
+            if (strList.get(i)!=null&&!strList.get(i).equals("")){
+                strListNew.add(strList.get(i));
+            }
+        }
+        String[] strNewArray = strListNew.toArray(new String[strListNew.size()]);
+
+        return strNewArray;
+    }
+
+
 }

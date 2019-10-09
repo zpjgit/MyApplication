@@ -4,11 +4,14 @@ import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbEndpoint;
 import android.util.Log;
 
+import com.example.zpj_work.myapplication.analysis.Analysis;
 import com.example.zpj_work.myapplication.listviewtest.Fruit;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static com.example.zpj_work.myapplication.usb.DevComm.Byte2Hex;
 
 /**
  * @创建者 zhengpengjie
@@ -22,7 +25,13 @@ public class ReceiveMessage {
 
 //    byte[] mybuffer, receiveData;
     String [] receiveDatas = new String[1024];
+    byte[][] data_bit = new byte[1024][1024];
+    String[][] data_str = new String[1024][1024];
+
     static String [] data = null;
+    static String [] data_String = null;
+
+
 
     /*接收数据*/
     public  int receive_Message(byte[] receiveBytes, UsbEndpoint epIn, UsbDeviceConnection myDeviceConnection, int TIMEOUT){
@@ -41,6 +50,8 @@ public class ReceiveMessage {
                 byte[] receiveData = new byte[ret];
                 for (int j = 0; j < ret; j++) {
                     receiveData[j] = receiveBytes[j];
+                    data_str[i][j] = DevComm.Byte2Hex(receiveData[j]);
+                    data_bit[i][j] = receiveData[j];
                 }
 
                 receiveDatas[i] = DevComm.bytesToHexString(receiveData);
@@ -52,6 +63,8 @@ public class ReceiveMessage {
 //                DevComm.sleep(10);
 
             }
+
+
 //            info.setText(
 //                    receiveDatas[0] + "\n"
 //                            + receiveDatas[1] + "\n"
@@ -69,6 +82,19 @@ public class ReceiveMessage {
 //            DevComm.sleep(300);
             data = receiveDatas;
             Log.d(TAG, "DataRe: "+Arrays.toString(receiveDatas));
+//------------------------------------------------------------------------------------------------------------
+            Analysis analysis = new Analysis();
+            analysis.setData_str(data_str);
+
+            for (int i=0; i<data_str.length; i++) {
+                if (data_str[i][0] == null) {
+                    continue;
+                }
+                data_str[i] = DevComm.removeArrayEmptyTextBackNewArray(data_str[i]);//data_str[i][]
+                Log.d(TAG, "\n=========================== " + ": ==>" + Arrays.toString(data_str[i]));
+            }
+//------------------------------------------------------------------------------------------------------------
+
 
         } else {
             Log.d(TAG, "receive failed");

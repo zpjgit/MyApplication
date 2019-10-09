@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        //清屏
         final Button clear_re = (Button) findViewById(R.id.clear_re);
         clear_re.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
