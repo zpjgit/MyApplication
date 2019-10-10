@@ -173,14 +173,23 @@ public class MainActivity extends AppCompatActivity {
         ReadLabelAnalysis reepc = new ReadLabelAnalysis();
         String[] ReadLabelEpc = reepc.getLabel_epc();
 
-        for (int i = 1; i <= 1024; i++) {
-            Fruit data = new Fruit(i, receiveDatas[i-1].toUpperCase());
-//            Fruit data = new Fruit(i, ReadLabelEpc[i-1].toUpperCase());
+        //------------------------------------------------------
+        ReadLabelAnalysis ReadLabel = new ReadLabelAnalysis();
+        ReadLabel.setLabel_epc();
+        String[] text_ReadLabel = ReadLabel.getLabel_epc();//setLabel_epc
 
+//        Log.d(TAG, "\n=============text_ReadLabel============== " + ": ==>" + Arrays.toString(text_ReadLabel));
+        //------------------------------------------------------
+
+//        for (int i = 1; i <= 1024; i++) {
+        for (int i = 1; i <= text_ReadLabel.length; i++) {
+//            Fruit data = new Fruit(i, receiveDatas[i-1].toUpperCase());//显示原始的冲缓存中取到的数据,没有对转译字符进行处理
+//            Fruit data = new Fruit(i, ReadLabelEpc[i-1].toUpperCase());
+            Fruit data = new Fruit(i, text_ReadLabel[i-1].toUpperCase());
             fruitList.add(data);
-            if (receiveDatas[i] == null) {
-                break;
-            }
+//            if (text_ReadLabel[i] == null) {
+//                break;
+//            }
         }
     }
 
