@@ -153,4 +153,12 @@ public class DevComm {
         }
         return checkSumHex;
     }
+
+    public static byte[] intToByte2byte(int val){
+        byte[] b = new byte[2];
+        b[0] = (byte)(val & 0xFF);
+        b[1] = (byte)((val >> 8) & 0xFF);
+
+        return b;
+    }
 }

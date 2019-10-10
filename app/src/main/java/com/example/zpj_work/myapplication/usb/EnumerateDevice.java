@@ -14,6 +14,8 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.zpj_work.myapplication.analysis.ReadOperation;
+
 import java.util.HashMap;
 
 /**
@@ -36,7 +38,7 @@ public class EnumerateDevice {
     private static final int TIMEOUT                  = 3000;
 
     //枚举设备
-    public void enumerateDevice(int m, UsbManager myUsbManager, PendingIntent pi) {
+    public void enumerateDevice(int m, int first_re, int len_re, String password_re, String region_re, UsbManager myUsbManager, PendingIntent pi) {
         if (myUsbManager == null) {
             return;
         }
@@ -56,7 +58,7 @@ public class EnumerateDevice {
                     myUsbDevice = device;
 //                    Toast.makeText(this, "枚举设备成功", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "枚举设备成功");
-                    findInterface(m, myUsbManager, pi);
+                    findInterface(m, first_re, len_re, password_re, region_re, myUsbManager, pi);
                 } else {
                     Log.d(TAG, "Not Found VID and PID");
                 }
@@ -73,7 +75,7 @@ public class EnumerateDevice {
     }
 
     //找到接口
-    private void findInterface(int m, UsbManager myUsbManager, PendingIntent pi) {
+    private void findInterface(int m, int first_re, int len_re, String password_re, String region_re, UsbManager myUsbManager, PendingIntent pi) {
         if (myUsbDevice == null) {
             return;
         }
@@ -88,7 +90,7 @@ public class EnumerateDevice {
             if (intf.getInterfaceClass() == 255 && intf.getInterfaceSubclass() == 0 && intf.getInterfaceProtocol() == 255) {
                 myInterface = intf;
                 Log.d(TAG, "找到我的设备接口. 接口的id号: "+intf.getId());
-                openDevice(m, myUsbManager, pi);
+                openDevice(m, first_re, len_re, password_re, region_re, myUsbManager, pi);
             }
 
             break;
@@ -96,7 +98,7 @@ public class EnumerateDevice {
     }
 
     //获取权限, 打开设备
-    private void openDevice(int m, UsbManager myUsbManager, PendingIntent pi) {
+    private void openDevice(int m, int first_re, int len_re, String password_re, String region_re, UsbManager myUsbManager, PendingIntent pi) {
         Log.d(TAG, "openDevice : "+ myUsbDevice.getInterfaceCount());
 
         if (myInterface != null) {
@@ -124,7 +126,7 @@ public class EnumerateDevice {
                 myDeviceConnection = conn; //到此你的android设备已经连上HID设备
                 Log.d(TAG, "打开设备成功");
 //                Toast.makeText(this, "打开设备成功", Toast.LENGTH_SHORT).show();
-                assignEndpoint(m);
+                assignEndpoint(m, first_re, len_re, password_re, region_re);
             } else {
                 conn.close();
             }
@@ -132,7 +134,7 @@ public class EnumerateDevice {
     }
 
     //拿到端点，用bulkTransfer进行数据发收
-    private void assignEndpoint(int m) {
+    private void assignEndpoint(int m, int first_re, int len_re, String password_re, String region_re) {
         for (int i=0; i<myInterface.getEndpointCount(); i++ ) {
             UsbEndpoint ep = myInterface.getEndpoint(i);
             if (ep.getType() == UsbConstants.USB_ENDPOINT_XFER_BULK) {
@@ -181,6 +183,19 @@ public class EnumerateDevice {
 
         }
 
+        if (m == 3) {
+            ReadOperation readOp = new ReadOperation();
+
+            String rO =readOp.readOperation(first_re, len_re, password_re, region_re);
+
+            buf = DevComm.HexToByteArr(rO);
+            SendMessage send = new SendMessage();
+            int re = send.send_Message(buf, epOut, myDeviceConnection, TIMEOUT);
+            myDeviceConnection.releaseInterface(myInterface);
+
+            //            myDeviceConnection.close();//关闭usb口
+
+        }
         ReceiveMessage receive = new ReceiveMessage();
         byte[] reByte = new byte[1024];
 

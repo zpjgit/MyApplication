@@ -66,17 +66,21 @@ public class ReadLabelAnalysis {
     //获取单个epc
     public String getEpc(String[] data_epc) {
 
-        boolean s1 = data_epc[4].equals("0D");
-        boolean s2 = data_epc[5].equals("05");
-        boolean s3 = data_epc[6].equals("00");
+//        boolean s1 = data_epc[4].equals("0D");
+//        boolean s2 = data_epc[5].equals("05");
+//        boolean s3 = data_epc[6].equals("00");
+//
+//        String check = DevComm.checksum(data_epc, 0, data_epc.length-3).toUpperCase(); //计算校验值
+//        boolean s4 = data_epc[data_epc.length-3].equals(check);
+////        Log.d(TAG, "\n=============s4============== check: " + check + " data_epc[data_epc.length-3]: " + data_epc[data_epc.length-3]);
 
-        String check = DevComm.checksum(data_epc, 0, data_epc.length-3).toUpperCase(); //计算校验值
-        boolean s4 = data_epc[data_epc.length-3].equals(check);
-//        Log.d(TAG, "\n=============s4============== check: " + check + " data_epc[data_epc.length-3]: " + data_epc[data_epc.length-3]);
+        ReadLabelEpc ReadLEpc = new ReadLabelEpc();
+        ReadLEpc.setTranslate(data_epc);
+        boolean boo = ReadLEpc.getTranslate();
+        Log.d(TAG, "\n=============boo============== " + ": ==>" + boo);
 
-
-
-        if (s1 && s2 && s3 && s4) {
+//        if (s1 && s2 && s3 && s4) {
+        if (boo) {
 
             for (int i=0; i<(data_epc.length-2); i++) {
                 if (data_epc[i].equals("99")) {
@@ -123,10 +127,8 @@ public class ReadLabelAnalysis {
             String cmdred_LOW  = data_epc[16];
 
             String EpcLeng = cmdred_LOW.concat(cmdred_HIGH);//拼接EPC的长度
-//            Log.d(TAG, "\n=============iEpcLeng============== " + EpcLeng);
 
             int iEpcLeng = (int) DevComm.f(EpcLeng);//将字符串转为十进制
-//            Log.d(TAG, "\n=============iEpcLeng============== " + iEpcLeng);
 
             epc = DevComm.StringArraysJoint(data_epc, 17, iEpcLeng + 17);
             if (epc == null) {
@@ -135,7 +137,6 @@ public class ReadLabelAnalysis {
             Log.d(TAG, "\n=============getEpc============== " + EpcLeng + "," + iEpcLeng + ": ==>" +"EPC:"+ epc);
 
         }
-//        Log.d(TAG, "\n++++++++++++++getEpc++++++++++++++++++ ");
 
         return epc;
     }

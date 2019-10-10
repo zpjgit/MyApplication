@@ -51,10 +51,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView info;
     private UsbManager myUsbManager;
 
-    int m = 1;
 
     private List<Fruit> fruitList =new ArrayList<>();
 
+    int m = 3;
+    int first_re = 0;
+    int len_re = 5;
+    String password_re = "00000000";
+    String region_re   = "01";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +89,11 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
+
+
                 EnumerateDevice en = new EnumerateDevice();
-                en.enumerateDevice(1, myUsbManager, pi);
+//                en.enumerateDevice(1, first_re, len_re, password_re, region_re, myUsbManager, pi);
+                en.enumerateDevice(m, first_re, len_re, password_re, region_re, myUsbManager, pi);
 
                 initFruitsData();//初始化数据
                 FruitAdapter adapter=new FruitAdapter(MainActivity.this,R.layout.fruit_item,fruitList);
@@ -141,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Perform action on click
                 EnumerateDevice en = new EnumerateDevice();
-                en.enumerateDevice(0, myUsbManager, pi);
+                en.enumerateDevice(0, first_re, len_re, password_re, region_re, myUsbManager, pi);
 
             }
         });
