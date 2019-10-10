@@ -42,24 +42,6 @@ public class Analysis {
         return data_str;
     }
 
-//    public String [] getData() {
-//        Log.d(TAG, "Data: "+Arrays.toString(data));
-//
-//        return data;
-//    }
 
-//    public static String[][] byteToString(byte[][] bytes) {
-//        String[][] strings = new String[1024][1024];
-//        for (int i=0; i<bytes.length; i++) {
-//            for (int j=0, k=0; j<bytes[i].length; j++, k++) {
-//                if (Byte2Hex(bytes[i][j]) == null) {
-//                    continue;
-//                }
-//                strings[i][k] = Byte2Hex(bytes[i][j]);
-//            }
-//
-//        }
-//        return strings;
-//    }
 
 }

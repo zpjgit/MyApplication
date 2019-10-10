@@ -35,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="盘点" />
+            android:text="读卡" />
 
         <Button
             android:id="@+id/clear_re"
@@ -60,11 +60,55 @@
 
     </LinearLayout>
 
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:showDividers="beginning|middle|end"
+        android:orientation="vertical">
+
+        <!--<TableRow-->
+            <!--android:showDividers="beginning|middle|end"-->
+            <!--android:orientation="horizontal">-->
+            <!--<TextView-->
+                <!--android:padding="8dp"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="序号"-->
+                <!--android:gravity="center"/>-->
+            <!--<TextView-->
+                <!--android:padding="8dp"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="天线号"-->
+                <!--android:gravity="center"/>-->
+            <!--<TextView-->
+                <!--android:padding="8dp"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="6"-->
+                <!--android:text="EPC码"-->
+                <!--android:gravity="center"/>-->
+            <!--<TextView-->
+                <!--android:padding="8dp"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="次数"-->
+                <!--android:gravity="center"/>-->
+            <!--<TextView-->
+                <!--android:padding="8dp"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="RSSI(dBm)"-->
+                <!--android:gravity="center"/>-->
+        <!--</TableRow>-->
+
+    </TableLayout>
+
     <TextView
         android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="读取:" />
+
 
     <LinearLayout
         android:layout_width="match_parent"

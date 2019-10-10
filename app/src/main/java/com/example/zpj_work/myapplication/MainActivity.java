@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zpj_work.myapplication.analysis.Analysis;
+import com.example.zpj_work.myapplication.analysis.ReadLabelAnalysis;
 import com.example.zpj_work.myapplication.listviewtest.Fruit;
 import com.example.zpj_work.myapplication.listviewtest.FruitAdapter;
 import com.example.zpj_work.myapplication.usb.DevComm;
@@ -112,16 +113,25 @@ public class MainActivity extends AppCompatActivity {
         test_q.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-                Analysis analysis = new Analysis();
-                String[][] text_q = analysis.getData_str();
+                //------------------------------------------------------测试analysis.getData_str()中的数据
+//                Analysis analysis = new Analysis();
+//                String[][] text_q = analysis.getData_str();
+//
+//                for (int i=0; i<text_q.length; i++) {
+//                    if (text_q[i][0] == null) {
+//                        continue;
+//                    }
+//                    text_q[i] = DevComm.removeArrayEmptyTextBackNewArray(text_q[i]);//data_str[i][]
+//                    Log.d(TAG, "\n=============text_q============== " + ": ==>" + Arrays.toString(text_q[i]));
+//                }
+                //------------------------------------------------------
+                ReadLabelAnalysis ReadLabel = new ReadLabelAnalysis();
+                ReadLabel.setLabel_epc();
+                String[] text_ReadLabel = ReadLabel.getLabel_epc();//setLabel_epc
 
-                for (int i=0; i<text_q.length; i++) {
-                    if (text_q[i][0] == null) {
-                        continue;
-                    }
-                    text_q[i] = DevComm.removeArrayEmptyTextBackNewArray(text_q[i]);//data_str[i][]
-                    Log.d(TAG, "\n=============text_q============== " + ": ==>" + Arrays.toString(text_q[i]));
-                }
+                Log.d(TAG, "\n=============text_ReadLabel============== " + ": ==>" + Arrays.toString(text_ReadLabel));
+                //------------------------------------------------------
+
             }
         });
 
@@ -159,9 +169,13 @@ public class MainActivity extends AppCompatActivity {
     private void initFruitsData() { //ok
         ReceiveMessage re = new ReceiveMessage();
         String[] receiveDatas = re.getData();
+
+        ReadLabelAnalysis reepc = new ReadLabelAnalysis();
+        String[] ReadLabelEpc = reepc.getLabel_epc();
+
         for (int i = 1; i <= 1024; i++) {
-            //            Fruit data = new Fruit(i, "5A 55 08 00 0D 11 00 00 01 D6 6A 69");
             Fruit data = new Fruit(i, receiveDatas[i-1].toUpperCase());
+//            Fruit data = new Fruit(i, ReadLabelEpc[i-1].toUpperCase());
 
             fruitList.add(data);
             if (receiveDatas[i] == null) {

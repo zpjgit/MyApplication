@@ -87,5 +87,70 @@ public class DevComm {
         return strNewArray;
     }
 
+    //十六进制字符转十进制int
+    public static long f(String s) {
+        int n=0;
+        long b;
+        long sum=0;
+        for(int i=s.length()-1;i>=0;i--) {
+            char a=s.charAt(i);
+            if(a=='A'||a=='B'||a=='C'||a=='D'||a=='E'||a=='F') {
+                b=a-'0'-7;
+            }else
+                b=a-'0';
+            //				b=b*16; //错误，若不用for循环，b每次都是全新的数，相当于每次都是*16的1次方
+            //				sum=sum+b;
+            for(int j=0;j<n;j++) {
+                b=b*16;
+            }
+            sum=sum+b;
+            n++;
+        }
+        //		System.out.println(sum);
+        return (long)sum;
+    }
 
+    static public String StringArraysJoint(String[] inBytArr, int offset, int len)//String数组拼接为字符串
+    {
+        StringBuilder sb = new StringBuilder(inBytArr.length*3);
+        int offset1 = inBytArr.length;  //从0算起不需要“int offset1 = inBytArr.length-1”
+
+        for( int i = offset; i < len; i++ )
+        {
+            sb.append(inBytArr[i]).append("");
+        }
+        return sb.toString();
+    }
+
+    //计算校验和
+    static String checksum = "aa";
+    static public String checksum(String[] cmdredNo0x, int offset, int end) {
+        //		String checksums = StringArraysJoint(cmdredNo0x, 0, (cmdredNo0x.length-3));//包含结束帧
+        String checksums = StringArraysJoint(cmdredNo0x, offset, end);
+        //		System.out.println(checksums);
+        checksum = makeCheckSum(checksums); //得到十六进制校验和
+
+        return checksum;
+    }
+
+    //计算校验位 ，返回十六进制校验位
+    static public String makeCheckSum(String data) {
+        int dSum = 0;
+        int length = data.length();
+        int index = 0;
+        // 遍历十六进制，并计算总和
+        while (index < length) {
+            String s = data.substring(index, index + 2); // 截取2位字符
+            dSum += Integer.parseInt(s, 16); // 十六进制转成十进制 , 并计算十进制的总和
+            index = index + 2;
+        }
+
+        int mod = dSum % 256; // 用256取余，十六进制最大是FF，FF的十进制是255
+        String checkSumHex = Integer.toHexString(mod); // 余数转成十六进制
+        length = checkSumHex.length();
+        if (length < 2) {
+            checkSumHex = "0" + checkSumHex;  // 校验位不足两位的，在前面补0
+        }
+        return checkSumHex;
+    }
 }

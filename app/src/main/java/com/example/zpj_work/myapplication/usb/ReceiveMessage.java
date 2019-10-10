@@ -91,10 +91,20 @@ public class ReceiveMessage {
                     continue;
                 }
                 data_str[i] = DevComm.removeArrayEmptyTextBackNewArray(data_str[i]);//data_str[i][]
-                Log.d(TAG, "\n=========================== " + ": ==>" + Arrays.toString(data_str[i]));
+                Log.d(TAG, "\n=========================== " + ": ==>" + Arrays.toString(data_str[i]));//getLabel_epc
             }
 //------------------------------------------------------------------------------------------------------------
-
+//            Analysis analysis = new Analysis();
+//            analysis.setData_str(data_str);
+//
+//            for (int i=0; i<data_str.length; i++) {
+//                if (data_str[i][0] == null) {
+//                    continue;
+//                }
+//                data_str[i] = DevComm.removeArrayEmptyTextBackNewArray(data_str[i]);//data_str[i][]
+//                Log.d(TAG, "\n=========================== " + ": ==>" + Arrays.toString(data_str[i]));//getLabel_epc
+//            }
+//------------------------------------------------------------------------------------------------------------
 
         } else {
             Log.d(TAG, "receive failed");
