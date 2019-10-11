@@ -55,10 +55,10 @@ public class MainActivity extends AppCompatActivity {
     private List<Fruit> fruitList =new ArrayList<>();
 
     int m = 3;
-    int first_re = 2;
+    int first_re = 0;
     int len_re = 3;
     String password_re = "00000000";
-    String region_re   = "01";
+    String region_re   = "03";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

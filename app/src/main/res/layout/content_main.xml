@@ -10,125 +10,481 @@
     android:orientation="vertical"
     >
 
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Hello World!"-->
-        <!--app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--app:layout_constraintLeft_toLeftOf="parent"-->
-        <!--app:layout_constraintRight_toRightOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
-    <!--<Button-->
-        <!--android:id="@+id/button"-->
+    <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="wrap_content"-->
-        <!--android:text="Button" />-->
+        <!--android:orientation="horizontal">-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <!--<Button-->
+            <!--android:id="@+id/button"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="读卡" />-->
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="读卡" />
+        <!--<Button-->
+            <!--android:id="@+id/clear_re"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="清除" />-->
 
-        <Button
-            android:id="@+id/clear_re"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="清除" />
+        <!--<Button-->
+            <!--android:id="@+id/text_q"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="测试" />-->
 
-        <Button
-            android:id="@+id/text_q"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="测试" />
+        <!--<Button-->
+            <!--android:id="@+id/buttonST"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
 
-        <Button
-            android:id="@+id/buttonST"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            <!--android:text="停止" />-->
 
-            android:text="停止" />
+    <!--</LinearLayout>-->
 
-    </LinearLayout>
 
+
+    <!--<TextView-->
+        <!--android:id="@+id/info"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="读取:" />-->
+    <!--画图开始-->
+    <!--第一行-->
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:showDividers="beginning|middle|end"
+        android:background="@color/colorAccent"
         android:orientation="vertical">
+        <TableRow>
 
-        <!--<TableRow-->
-            <!--android:showDividers="beginning|middle|end"-->
-            <!--android:orientation="horizontal">-->
-            <!--<TextView-->
-                <!--android:padding="8dp"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="序号"-->
-                <!--android:gravity="center"/>-->
-            <!--<TextView-->
-                <!--android:padding="8dp"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="天线号"-->
-                <!--android:gravity="center"/>-->
-            <!--<TextView-->
-                <!--android:padding="8dp"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="6"-->
-                <!--android:text="EPC码"-->
-                <!--android:gravity="center"/>-->
-            <!--<TextView-->
-                <!--android:padding="8dp"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="次数"-->
-                <!--android:gravity="center"/>-->
-            <!--<TextView-->
-                <!--android:padding="8dp"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="RSSI(dBm)"-->
-                <!--android:gravity="center"/>-->
-        <!--</TableRow>-->
+            <!--第一行第一列-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/background_light"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="3dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="序号"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="20dp"
+                        android:layout_centerHorizontal="true"
+                        />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <!--第一行第二列-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/background_light"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="3dp">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="天线号"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="20dp"
+                        android:layout_centerHorizontal="true"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!--第一行第三列-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="12">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/background_light"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="3dp">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EPC码"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="20dp"
+                        android:layout_centerHorizontal="true"
+                        />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!--第一行第四列-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="vertical"-->
+                <!--android:layout_weight="1">-->
+
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="@android:color/background_light"-->
+                    <!--android:layout_marginTop="3dp"-->
+                    <!--android:layout_marginRight="3dp">-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/textView4"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="EPC码"-->
+                        <!--android:textColor="@color/colorAccent"-->
+                        <!--android:textSize="20dp"-->
+                        <!--android:layout_centerHorizontal="true"-->
+                        <!--/>-->
+                <!--</RelativeLayout>-->
+            <!--</LinearLayout>-->
+
+
+        </TableRow>
 
     </TableLayout>
 
-    <TextView
-        android:id="@+id/info"
+    <!--第二行-->
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/colorAccent">
+        <TableRow>
+
+
+        </TableRow>
+    </TableLayout>
+    <!--画图结束-->
+    <!--第二行-->
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="读取:" />
+        android:background="@color/colorwhite"
+        android:orientation="vertical">
+        <TableRow>
+
+            <!--第二行第一列-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:orientation="vertical"
+                    tools:layout_editor_absoluteX="8dp"
+                    tools:layout_editor_absoluteY="8dp"
+                    tools:ignore="MissingConstraints">
 
 
-    <LinearLayout
+                    <ListView
+                        android:id="@+id/list_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </TableRow>
+
+    </TableLayout>
+    <!--第三行-->
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:ignore="MissingConstraints">
+        >
+        <TableRow>
 
 
-        <ListView
-            android:id="@+id/list_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            <!--第三行第一列 开始-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
 
-            />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/background_light"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="3dp"
+                    >
+                <!--+++++++++++++++++++++++++++++++++++-->
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="EPC"
+                        />
+
+                    <CheckBox
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="TID"
+                        />
+
+                    <CheckBox
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="USER"
+                        />
+
+                </LinearLayout>
+                </RelativeLayout>
+                <!--+++++++++++++++++++++++++++++++++++-->
 
 
+            </LinearLayout>
+            <!--第三行第一列 结束-->
+            <!--第三行第二列 开始-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/background_light"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginLeft="0dp"
+                    >
+                    <!--+++++++++++++++++++++++++++++++++++-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+
+                        <EditText
+                            android:id="@+id/editTextfr"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="numberDecimal"
+                            android:hint="偏移地址"
+                            android:text=""/>
+
+
+                        <EditText
+                            android:id="@+id/editTextlen"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="numberDecimal"
+                            android:hint="读取长度"
+                            android:text=""/>
+
+                        <EditText
+                            android:id="@+id/editTextpass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="textPersonName"
+                            android:hint="密码"
+                            android:text="00000000" />
+
+
+
+
+                    </LinearLayout>
+                </RelativeLayout>
+                <!--+++++++++++++++++++++++++++++++++++-->
+
+
+            </LinearLayout>
+            <!--第三行第二列 结束-->
+
+        </TableRow>
+
+    </TableLayout>
+
+
+
+    <!--第四行 开始-->
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        >
+        <TableRow>
+
+
+            <!--第三行第一列-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/background_light"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginRight="0dp"
+                    android:layout_marginLeft="0dp"
+                    >
+                    <!--+++++++++++++++++++++++++++++++++++-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="读卡" />
+
+                        <Button
+                            android:id="@+id/clear_re"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="清除" />
+
+                        <Button
+                            android:id="@+id/text_q"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="测试" />
+
+                        <Button
+                            android:id="@+id/buttonST"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+
+                            android:text="停止" />
+
+                    </LinearLayout>
+                </RelativeLayout>
+                <!--+++++++++++++++++++++++++++++++++++-->
+
+
+            </LinearLayout>
+
+
+        </TableRow>
+
+    </TableLayout>
+    <!--第四行 结束-->
+
+
+
+    <!--原始代码先保留 开始-->
+        <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="500dp"-->
+    <!--android:orientation="vertical"-->
+    <!--tools:layout_editor_absoluteX="8dp"-->
+    <!--tools:layout_editor_absoluteY="8dp"-->
+    <!--tools:ignore="MissingConstraints">-->
+
+
+    <!--<ListView-->
+    <!--android:id="@+id/list_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+
+    <!--/>-->
+
+    <!--</LinearLayout>-->
+
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginTop="0dp"-->
+    <!--android:orientation="horizontal">-->
+
+    <!--<Button-->
+    <!--android:id="@+id/button"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+                <!--android:text="读卡" />-->
+
+            <!--<Button-->
+                <!--android:id="@+id/clear_re"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="清除" />-->
+
+            <!--<Button-->
+                <!--android:id="@+id/text_q"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="测试" />-->
+
+            <!--<Button-->
+                <!--android:id="@+id/buttonST"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="0dp"-->
+
+                <!--android:text="停止" />-->
+
+        <!--</LinearLayout>-->
+    <!--原始代码先保留 结束-->
 
 
 
