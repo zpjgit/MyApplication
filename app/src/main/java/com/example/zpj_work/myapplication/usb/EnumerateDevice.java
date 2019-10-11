@@ -187,7 +187,7 @@ public class EnumerateDevice {
             ReadOperation readOp = new ReadOperation();
 
             String rO =readOp.readOperation(first_re, len_re, password_re, region_re);
-
+            Log.d(TAG,"readOperation-------------> " + rO);
             buf = DevComm.HexToByteArr(rO);
             SendMessage send = new SendMessage();
             int re = send.send_Message(buf, epOut, myDeviceConnection, TIMEOUT);

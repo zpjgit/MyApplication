@@ -25,7 +25,7 @@ public class ReadLabelAnalysis {
     //    public static String[] label_epc = null;
 
     //    public void setLabel_epc(String[][] data_all) {
-    public void setLabel_epc() {
+    public void setLabel_epc(int m, int first_re, int len_re) {
 
 
         Analysis analysis = new Analysis();
@@ -42,7 +42,7 @@ public class ReadLabelAnalysis {
             data_all[i] = DevComm.removeArrayEmptyTextBackNewArray(data_all[i]);//data_str[i][]
             Log.d(TAG, "\n=========data_all================== " + ": ==>" + Arrays.toString(data_all[i]));//getLabel_epc
 
-            String getepc = getEpc(data_all[i]);
+            String getepc = getEpc(m, data_all[i], first_re, len_re);
             if (getepc == null) {
                 continue;
             }
@@ -63,8 +63,8 @@ public class ReadLabelAnalysis {
         return label_epc;
     }
 
-    //获取单个epc
-    public String getEpc(String[] data_epc) {
+    //获取单个包
+    public String getEpc(int m, String[] data_epc, int first_re, int len_re) {
 
 //        boolean s1 = data_epc[4].equals("0D");
 //        boolean s2 = data_epc[5].equals("05");
@@ -75,7 +75,7 @@ public class ReadLabelAnalysis {
 ////        Log.d(TAG, "\n=============s4============== check: " + check + " data_epc[data_epc.length-3]: " + data_epc[data_epc.length-3]);
 
         ReadLabelEpc ReadLEpc = new ReadLabelEpc();
-        ReadLEpc.setTranslate(data_epc);
+        ReadLEpc.setTranslate(m, data_epc);
         boolean boo = ReadLEpc.getTranslate();
         Log.d(TAG, "\n=============boo============== " + ": ==>" + boo);
 
@@ -122,19 +122,35 @@ public class ReadLabelAnalysis {
 
 
             Log.d(TAG, "\n=============if (s1 && s2 && s3 && s4)============== " + ": ==>" + Arrays.toString(data_epc));
+            if (m == 1) {
+                String cmdred_HIGH = data_epc[15];
+                String cmdred_LOW = data_epc[16];
 
-            String cmdred_HIGH = data_epc[15];
-            String cmdred_LOW  = data_epc[16];
+                String EpcLeng = cmdred_LOW.concat(cmdred_HIGH);//拼接EPC的长度
 
-            String EpcLeng = cmdred_LOW.concat(cmdred_HIGH);//拼接EPC的长度
+                int iEpcLeng = (int) DevComm.f(EpcLeng);//将字符串转为十进制
 
-            int iEpcLeng = (int) DevComm.f(EpcLeng);//将字符串转为十进制
-
-            epc = DevComm.StringArraysJoint(data_epc, 17, iEpcLeng + 17);
-            if (epc == null) {
-                return epcun;
+                epc = DevComm.StringArraysJoint(data_epc, 17, iEpcLeng + 17);
+                if (epc == null) {
+                    return epcun;
+                }
+                Log.d(TAG, "\n=============getEpc============== " + EpcLeng + "," + iEpcLeng + ": ==>" + "EPC:" + epc);
             }
-            Log.d(TAG, "\n=============getEpc============== " + EpcLeng + "," + iEpcLeng + ": ==>" +"EPC:"+ epc);
+
+            if (m == 3) {
+//                String cmdred_HIGH = data_epc[15];
+//                String cmdred_LOW = data_epc[16];
+//
+//                String EpcLeng = cmdred_LOW.concat(cmdred_HIGH);//拼接EPC的长度
+//
+//                int iEpcLeng = (int) DevComm.f(EpcLeng);//将字符串转为十进制
+
+                epc = DevComm.StringArraysJoint(data_epc, (18), (len_re*2 + 18));
+                if (epc == null) {
+                    return epcun;
+                }
+                Log.d(TAG, "\n=============getEpc============== " + len_re + "," + " ==>" + "EPC:" + epc);
+            }
 
         }
 

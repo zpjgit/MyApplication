@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
     private List<Fruit> fruitList =new ArrayList<>();
 
     int m = 3;
-    int first_re = 0;
-    int len_re = 5;
+    int first_re = 2;
+    int len_re = 3;
     String password_re = "00000000";
     String region_re   = "01";
 
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 //                }
                 //------------------------------------------------------
                 ReadLabelAnalysis ReadLabel = new ReadLabelAnalysis();
-                ReadLabel.setLabel_epc();
+                ReadLabel.setLabel_epc(m, first_re, len_re);
                 String[] text_ReadLabel = ReadLabel.getLabel_epc();//setLabel_epc
 
                 Log.d(TAG, "\n=============text_ReadLabel============== " + ": ==>" + Arrays.toString(text_ReadLabel));
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
         //------------------------------------------------------
         ReadLabelAnalysis ReadLabel = new ReadLabelAnalysis();
-        ReadLabel.setLabel_epc();
+        ReadLabel.setLabel_epc(m, first_re, len_re);
         String[] text_ReadLabel = ReadLabel.getLabel_epc();//setLabel_epc
 
 //        Log.d(TAG, "\n=============text_ReadLabel============== " + ": ==>" + Arrays.toString(text_ReadLabel));
