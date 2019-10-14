@@ -117,8 +117,17 @@ public class DevComm {
 
         for( int i = offset; i < len; i++ )
         {
-            sb.append(inBytArr[i]).append("");
+            if (inBytArr == null) {
+                return null;
+            }
+//            sb.append(inBytArr[i]);
+            try {
+                sb.append(inBytArr[i]).append("");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
         return sb.toString();
     }
 

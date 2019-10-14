@@ -28,34 +28,48 @@ public class ReadLabelAnalysis {
     public void setLabel_epc(int m, int first_re, int len_re) {
 
 
-        Analysis analysis = new Analysis();
-        String[][] data_all = analysis.getData_str();
-        label_epc = new String[data_all.length];
+            Analysis analysis = new Analysis();
+            String[][] data_all = analysis.getData_str();
+            label_epc = new String[data_all.length];
 
-        int k = 0, i=0;
-//        String[] label_epc = new String[data_all.length];
+            Log.d(TAG, "\n=============data_all.length============== " + ": ==>" + data_all.length);
 
-        for (i=0,k=0; i<data_all.length; i++) {
-            if (data_all[i][0] == null) {
-                continue;
+            int k = 0, i=0;
+            //        String[] label_epc = new String[data_all.length];
+
+            for (i=0,k=0; i<data_all.length; i++) {
+                if (data_all[i][0] == null) {
+                    continue;
+                }
+                data_all[i] = DevComm.removeArrayEmptyTextBackNewArray(data_all[i]);//data_str[i][]
+                Log.d(TAG, "\n=========data_all================== " + ": ==>" + Arrays.toString(data_all[i]));//getLabel_epc
+
+                String getepc = null, getepctext = null;
+                try {
+                    getepctext = getEpc(m, data_all[i], first_re, len_re);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    continue;
+                }
+                if (getepctext == null) {
+                    continue;
+                } else if (getepctext.equals("err")) {
+                    continue;
+                } else {
+//                    getepc = getepctext; //getEpc(m, data_all[i], first_re, len_re);
+                    label_epc[k]     = getepctext;
+
+                }
+
+                Log.d(TAG, "\n=============`1label_epc[k] = getepc============== " + ": ==>" + label_epc[k]);
+                k++;
             }
-            data_all[i] = DevComm.removeArrayEmptyTextBackNewArray(data_all[i]);//data_str[i][]
-            Log.d(TAG, "\n=========data_all================== " + ": ==>" + Arrays.toString(data_all[i]));//getLabel_epc
 
-            String getepc = getEpc(m, data_all[i], first_re, len_re);
-            if (getepc == null) {
-                continue;
-            }
+            label_epc = DevComm.removeArrayEmptyTextBackNewArray(label_epc);
+            Log.d(TAG, "\n=============label_epc============== " + ": ==>" + Arrays.toString(label_epc));
 
-            label_epc[k]     = getepc;
-            Log.d(TAG, "\n=============label_epc[k] = getepc============== " + ": ==>" + label_epc[k]);
-            k++;
-        }
+            this.label_epc = label_epc;
 
-        label_epc = DevComm.removeArrayEmptyTextBackNewArray(label_epc);
-        Log.d(TAG, "\n=============label_epc============== " + ": ==>" + Arrays.toString(label_epc));
-
-        this.label_epc = label_epc;
     }
 
 
@@ -131,30 +145,36 @@ public class ReadLabelAnalysis {
                 int iEpcLeng = (int) DevComm.f(EpcLeng);//将字符串转为十进制
 
                 epc = DevComm.StringArraysJoint(data_epc, 17, iEpcLeng + 17);
+
                 if (epc == null) {
                     return epcun;
                 }
-                Log.d(TAG, "\n=============getEpc============== " + EpcLeng + "," + iEpcLeng + ": ==>" + "EPC:" + epc);
+
+                Log.d(TAG, "\n=============getEpc  m = 1 ============== " + EpcLeng + "," + iEpcLeng + ": ==>" + "EPC:" + epc);
+                return epc;
+
             }
 
             if (m == 3) {
-//                String cmdred_HIGH = data_epc[15];
-//                String cmdred_LOW = data_epc[16];
-//
-//                String EpcLeng = cmdred_LOW.concat(cmdred_HIGH);//拼接EPC的长度
-//
-//                int iEpcLeng = (int) DevComm.f(EpcLeng);//将字符串转为十进制
 
-                epc = DevComm.StringArraysJoint(data_epc, (18), (len_re*2 + 18));
-                if (epc == null) {
-                    return epcun;
+                try {
+                    epc = DevComm.StringArraysJoint(data_epc, (18), (len_re*2 + 18));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    epc = null;
+                } finally {
+                    if (epc == null) {
+                        return epcun;
+                    }
                 }
-                Log.d(TAG, "\n=============getEpc============== " + len_re + "," + " ==>" + "EPC:" + epc);
+                Log.d(TAG, "\n=============getEpc  m = 3 ============== " + len_re + "," + " ==>" + "EPC:" + epc);
+                return epc;
+
             }
 
         }
 
-        return epc;
+        return "err";
     }
 
 

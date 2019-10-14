@@ -46,12 +46,12 @@ public class ReadLabelEpc {
             if (s1 && s2 && s3 && s4) {
                 this.status = true;
             }
-        }
-
-        if (m == 3) {
+        } else if (m == 3) {
             if (s5 && s6 && s7 && s8) {
                 this.status = true;
             }
+        } else {
+            this.status = false;
         }
 
     }

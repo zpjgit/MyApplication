@@ -38,7 +38,7 @@ public class EnumerateDevice {
     private static final int TIMEOUT                  = 3000;
 
     //枚举设备
-    public void enumerateDevice(int m, int first_re, int len_re, String password_re, String region_re, UsbManager myUsbManager, PendingIntent pi) {
+    public void enumerateDevice(int m, int opentag, int first_re, int len_re, String password_re, String region_re, UsbManager myUsbManager, PendingIntent pi) {
         if (myUsbManager == null) {
             return;
         }
@@ -58,7 +58,7 @@ public class EnumerateDevice {
                     myUsbDevice = device;
 //                    Toast.makeText(this, "枚举设备成功", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "枚举设备成功");
-                    findInterface(m, first_re, len_re, password_re, region_re, myUsbManager, pi);
+                    findInterface(m, opentag, first_re, len_re, password_re, region_re, myUsbManager, pi);
                 } else {
                     Log.d(TAG, "Not Found VID and PID");
                 }
@@ -75,7 +75,7 @@ public class EnumerateDevice {
     }
 
     //找到接口
-    private void findInterface(int m, int first_re, int len_re, String password_re, String region_re, UsbManager myUsbManager, PendingIntent pi) {
+    private void findInterface(int m, int opentag, int first_re, int len_re, String password_re, String region_re, UsbManager myUsbManager, PendingIntent pi) {
         if (myUsbDevice == null) {
             return;
         }
@@ -90,7 +90,7 @@ public class EnumerateDevice {
             if (intf.getInterfaceClass() == 255 && intf.getInterfaceSubclass() == 0 && intf.getInterfaceProtocol() == 255) {
                 myInterface = intf;
                 Log.d(TAG, "找到我的设备接口. 接口的id号: "+intf.getId());
-                openDevice(m, first_re, len_re, password_re, region_re, myUsbManager, pi);
+                openDevice(m, opentag, first_re, len_re, password_re, region_re, myUsbManager, pi);
             }
 
             break;
@@ -98,7 +98,7 @@ public class EnumerateDevice {
     }
 
     //获取权限, 打开设备
-    private void openDevice(int m, int first_re, int len_re, String password_re, String region_re, UsbManager myUsbManager, PendingIntent pi) {
+    private void openDevice(int m, int opentag, int first_re, int len_re, String password_re, String region_re, UsbManager myUsbManager, PendingIntent pi) {
         Log.d(TAG, "openDevice : "+ myUsbDevice.getInterfaceCount());
 
         if (myInterface != null) {
@@ -125,6 +125,12 @@ public class EnumerateDevice {
             if (conn.claimInterface(myInterface, true)) {
                 myDeviceConnection = conn; //到此你的android设备已经连上HID设备
                 Log.d(TAG, "打开设备成功");
+                //---------------------------------------------------------------
+                if (opentag == 104) {
+                    Log.d(TAG, "--------------------------------------------清屏");
+                    conn.close();
+                }
+                //---------------------------------------------------------------
 //                Toast.makeText(this, "打开设备成功", Toast.LENGTH_SHORT).show();
                 assignEndpoint(m, first_re, len_re, password_re, region_re);
             } else {
@@ -154,6 +160,7 @@ public class EnumerateDevice {
         String cmd01 = "5A5508000D11000000D56A69"; //非连续盘点不启用FastID功能
         String cmd02 = "5A5508000D11000001D66A69"; //连续盘点不启用FastID功能    5A 55 08 00 0D 11 00 00 01 D6 6A 69
         String abortc = "5A5506000D0300C56A69"; //停止
+
         if (m == 0) {
             buf = DevComm.HexToByteArr(abortc);
             SendMessage send = new SendMessage();
@@ -163,6 +170,7 @@ public class EnumerateDevice {
             //            myDeviceConnection.close();
 
         }
+
         if (m == 1) {
             buf = DevComm.HexToByteArr(cmd01);
             SendMessage send = new SendMessage();
@@ -196,10 +204,15 @@ public class EnumerateDevice {
             //            myDeviceConnection.close();//关闭usb口
 
         }
-        ReceiveMessage receive = new ReceiveMessage();
-        byte[] reByte = new byte[1024];
 
-        int re2 = receive.receive_Message(reByte, epIn, myDeviceConnection, TIMEOUT);
+        try {
+            ReceiveMessage receive = new ReceiveMessage();
+            byte[] reByte = new byte[1024];
+
+            int re2 = receive.receive_Message(reByte, epIn, myDeviceConnection, TIMEOUT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }

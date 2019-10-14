@@ -36,10 +36,18 @@ public class FruitAdapter extends ArrayAdapter<Fruit> {
         View view = LayoutInflater.from(getContext()).inflate(resoureId,parent,false);
         //获取TextView实例
         TextView fruitName=(TextView)view.findViewById(R.id.fruit_number);
-        TextView fruitData=(TextView)view.findViewById(R.id.fruit_data);
+        TextView fruitAntennas=(TextView)view.findViewById(R.id.fruit_antennas);
+        TextView fruitDataepc=(TextView)view.findViewById(R.id.fruit_dataepc);
+        TextView fruitDatatid=(TextView)view.findViewById(R.id.fruit_datatid);
+        TextView fruitDatauser=(TextView)view.findViewById(R.id.fruit_datauser);
+
         //调用setText()设置显示的Number和Data
         fruitName.setText(fruit.getNumber()+" ");
-        fruitData.setText(fruit.getData());
+        fruitAntennas.setText(fruit.getAntennas()+" ");
+        fruitDataepc.setText(fruit.getDataepc());
+        fruitDatatid.setText(fruit.getDatatid());
+        fruitDatauser.setText(fruit.getDatauser());
+
         //返回布局
         return view;
 

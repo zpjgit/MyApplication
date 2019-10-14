@@ -43,7 +43,7 @@ public class ReceiveMessage {
                 if (ret <= 0 || DevComm.bytesToHexString(receiveBytes) == null) {
 
                     Log.d(TAG, "\n读到的数据为空或者出错 " + ret + ", " + receiveBytes.length);
-
+//                    continue;
                     break;
                 }
 
@@ -83,16 +83,19 @@ public class ReceiveMessage {
             data = receiveDatas;
             Log.d(TAG, "DataRe: "+Arrays.toString(receiveDatas));
 //------------------------------------------------------------------------------------------------------------
-            Analysis analysis = new Analysis();
-            analysis.setData_str(data_str);
-
+            int num = 0;
             for (int i=0; i<data_str.length; i++) {
                 if (data_str[i][0] == null) {
                     continue;
                 }
                 data_str[i] = DevComm.removeArrayEmptyTextBackNewArray(data_str[i]);//data_str[i][]
                 Log.d(TAG, "\n=========================== " + ": ==>" + Arrays.toString(data_str[i]));//getLabel_epc
+                num++;
             }
+            Log.d(TAG, "\n=========================== num " + ": ==>" + num);
+
+            Analysis analysis = new Analysis();
+            analysis.setData_str(data_str);
 //------------------------------------------------------------------------------------------------------------
 //            Analysis analysis = new Analysis();
 //            analysis.setData_str(data_str);
